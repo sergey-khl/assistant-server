@@ -2,12 +2,17 @@ import { createRequire } from "module";
 import { ChatGPTAPIBrowser } from "chatgpt";
 const require = createRequire(import.meta.url);
 const puppeteer = require("puppeteer");
-
+const compression = require("compression");
+const helment = require("helmet");
 const express = require("express");
+
+
 const cors = require("cors");
 const app = express();
-const PORT = 5000;
+const PORT = process.env.NODE_ENV === 'production' ? 80 : 5000;
 
+app.use(compression());
+app.use(helment());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
@@ -36,8 +41,8 @@ app.post("/api/prompt", (req, res) => {
 async function chatgptFunction(content) {
   // use puppeteer to bypass cloudflare (headful because of captchas)
   const api = new ChatGPTAPIBrowser({
-      email: "wxat333@gmail.com",
-      password: "Andkon333!",
+      email: process.env.OPENAI_EMAIL,
+      password: process.env.OPENAI_PASSWORD,
       isGoogleLogin: true
   });
   
