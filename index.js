@@ -60,7 +60,7 @@ async function chatgptFunction(content) {
   const pitch = await api.sendMessage(`using the following key value pairs generate a unique company pitch ${keyValue.response}:`, {
     timeoutMs: 2 * 60 * 1000
   });
-
+  //api.closeSession();
   //👇🏻 Returns the response from ChatGPT
   return {
       businessPlan: businessPlan.response,
