@@ -2,14 +2,15 @@ import { createRequire } from "module";
 import { ChatGPTAPIBrowser } from "chatgpt";
 const require = createRequire(import.meta.url);
 const puppeteer = require("puppeteer");
+const dotenv = require("dotenv")
 const compression = require("compression");
 const helment = require("helmet");
 const express = require("express");
 
-
+dotenv.config()
 const cors = require("cors");
 const app = express();
-const PORT = process.env.NODE_ENV === 'production' ? 80 : 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(compression());
 app.use(helment());
